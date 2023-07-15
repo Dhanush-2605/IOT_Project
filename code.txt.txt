@@ -1,0 +1,78 @@
+const int en1=9;
+const int en2=8;
+const int en3=7;
+const int en4=6;
+const int pwm1=10;
+const int pwm2=11;
+const int pump=12;
+//#define pump 12
+ #define ira A0
+ #define ir 3
+ void setup () {
+ // put your setup code here, to run once:
+ Serial.begin(9600);
+ pinMode(en1, OUTPUT);
+ pinMode(en2, OUTPUT);
+ pinMode(en3, OUTPUT);
+ pinMode(en4, OUTPUT);
+ pinMode(ira,INPUT);
+ pinMode(ir,INPUT);
+ pinMode(pump,OUTPUT);
+ pinMode(pwm1, OUTPUT);
+19 | P a g e
+ pinMode(pwm2, OUTPUT);
+ digitalWrite(pump,HIGH);
+}
+void loop () {
+ // put your main code here, to run repeatedly:
+ int x=digitalRead(ir);
+// Serial.println(x);
+ int d=analogRead(ira);
+ Serial.println(d);
+ 
+// if(d>740) {
+ if(d>600) {
+ stopp();
+ digitalWrite(pump,LOW);
+ }
+// }
+ else {
+ analogWrite(pwm1,100);
+ analogWrite(pwm2,100);
+ left ();
+ digitalWrite(pump,HIGH);
+ }
+ 
+
+}
+void left () {
+ digitalWrite(en1, HIGH);
+ digitalWrite(en2, LOW);
+ digitalWrite(en3, LOW);
+ digitalWrite(en4, HIGH);
+}
+void right () {
+ digitalWrite(en1, LOW);
+ digitalWrite(en2, HIGH);
+ digitalWrite(en3, HIGH);
+ digitalWrite(en4, LOW);
+}
+void back () {
+ digitalWrite(en1, HIGH);
+ digitalWrite(en2, LOW);
+ digitalWrite(en3, HIGH);
+ digitalWrite(en4, LOW);
+}
+void forward () {
+ digitalWrite(en1, LOW);
+ digitalWrite(en2, HIGH);
+ digitalWrite(en3, LOW);
+ digitalWrite(en4, HIGH);
+21 | P a g e
+}
+void stopp(){
+ digitalWrite(en1, LOW);
+ digitalWrite(en2, LOW);
+ digitalWrite(en3, LOW);
+ digitalWrite(en4, LOW);
+}
